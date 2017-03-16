@@ -10,7 +10,8 @@ class AirportService {
 
   def getRunway(country:String,allData:List[Country]): Future[List[Country]] ={
     Future(allData.filter(y=>country.equalsIgnoreCase(y.code) ||
-                             country.equalsIgnoreCase(y.name)))
+                             country.equalsIgnoreCase(y.name) ||
+                             country.toLowerCase.contains(y.name.toLowerCase)))
   }
 
   def getHighestAirport(allData:List[Country]): Future[List[AirportCount]] ={
