@@ -22,12 +22,11 @@ class AirportController @Inject()(airportService:AirportService,cacheApi:CacheAp
 
 
   def home:Action[AnyContent] = Action {
-  Ok(views.html.home())
+    Ok(views.html.home())
   }
 
 
   def query(name:String):Action[AnyContent] = Action.async {
-    println("::::::::::::::::"+name)
     val allData=cacheApi.getOrElse[List[Country]]("countriesData")(Nil)
     val filterAirport=airportService.getRunway(name,allData)
     filterAirport.map(x=>Ok(Json.toJson(x))).recover{
