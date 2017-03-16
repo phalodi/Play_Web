@@ -9,9 +9,6 @@ import services.AirportService
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
-import play.api.libs.json._
-import utils.Formats._
-
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -49,7 +46,7 @@ class AirportController @Inject()(airportService:AirportService,cacheApi:CacheAp
       runway<-airportRunway
       commonIdentification<-commonIdent
     } yield Reports(top,low,runway,commonIdentification)
-    reports.map(report=>Ok(Json.toJson(report))).recover{
+    reports.map(report=>Ok(views.html.reports(report))).recover{
       case ex:Throwable=>
         InternalServerError("Something went wrong")
     }

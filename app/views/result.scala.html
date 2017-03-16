@@ -3,6 +3,8 @@
 
 <div>
     @countries.map { country =>
+
+    <ul>@country.name
              @country.airport.map { air =>
                 <ul>
                     <li>@air.name</li>
@@ -12,5 +14,6 @@
                     </ul>
                 </ul>
                 }
+        </ul>
     }
 </div>

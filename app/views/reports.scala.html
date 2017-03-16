@@ -1,0 +1,70 @@
+@import models.Reports
+@(report:Reports)
+
+<div>
+    <div>
+        <div>
+            <h3>Top 10 countries with highest airports</h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Number of airports</th>
+                </tr>
+                </thead>
+                @report.topAirports.map{highAir=>
+                <tbody>
+                <tr>
+                    <td>@highAir.country</td>
+                    <td>@highAir.airportCount</td>
+                </tr>
+                </tbody>
+                }
+            </table>
+        </div>
+
+    </div>
+    <div>
+        <div>
+            <h3>Top 10 countries with lowest airports</h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Number of airports</th>
+                </tr>
+                </thead>
+                @report.leastAirport.map{lowAir=>
+                <tbody id="myTable">
+                <tr>
+                    <td>@lowAir.country</td>
+                    <td>@lowAir.airportCount</td>
+                </tr>
+                </tbody>
+                }
+            </table>
+        </div>
+    </div>
+
+
+    <div>
+        <div>
+            <h3>Top 10 most common runway identifications</h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Identifications</th>
+                </tr>
+                </thead>
+                @report.commonIdent.map{commident=>
+                <tbody>
+                <tr>
+                    <td>@commident.ident</td>
+                </tr>
+                </tbody>
+                }
+            </table>
+        </div>
+
+    </div>
+</div>
