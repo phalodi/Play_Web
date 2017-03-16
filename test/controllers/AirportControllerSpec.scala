@@ -3,11 +3,12 @@ package controllers
 import models._
 import play.api.cache.CacheApi
 import services.AirportService
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
 
 import org.scalatestplus.play._
 import org.specs2.mock.Mockito
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 import play.api.mvc._
 import play.api.test._
 import play.api.test.Helpers._
@@ -26,8 +27,8 @@ class AirportControllerSpec extends PlaySpec with Results with Mockito {
       cacheApi.getOrElse[List[Country]]("countriesData")(Nil) returns countryData
       airportService.getRunway("aus",countryData) returns Future(countryData)
       val result: Future[Result] = controller.query("aus")(FakeRequest())
-      val bodyText: String = contentAsString(result)
-      bodyText contains "airport"
+      val result1=Await.result(result,10 seconds)
+      result1.header.status==200
     }
 
     "return error message" in {

@@ -28,11 +28,13 @@ class AirportController @Inject()(airportService:AirportService,cacheApi:CacheAp
 
   def query(name:String):Action[AnyContent] = Action.async {
     val allData=cacheApi.getOrElse[List[Country]]("countriesData")(Nil)
-    val filterAirport=airportService.getRunway(name,allData)
-    filterAirport.map(x=>Ok(Json.toJson(x))).recover{
+    val filterAirport = airportService.getRunway(name,allData)
+
+    filterAirport.map(countries=>Ok(views.html.result(countries))).recover{
       case ex:Exception=>
-        Ok("Something went wrong")
+        InternalServerError("Something went wrong")
     }
+
   }
 
   def reports():Action[AnyContent] = Action.async{
@@ -49,7 +51,7 @@ class AirportController @Inject()(airportService:AirportService,cacheApi:CacheAp
     } yield Reports(top,low,runway,commonIdentification)
     reports.map(report=>Ok(Json.toJson(report))).recover{
       case ex:Throwable=>
-        Ok("Something went wrong")
+        InternalServerError("Something went wrong")
     }
   }
 }

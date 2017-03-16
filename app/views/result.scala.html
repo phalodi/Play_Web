@@ -1,0 +1,16 @@
+@import models.Country
+@(countries: List[Country])
+
+<div>
+    @countries.map { country =>
+             @country.airport.map { air =>
+                <ul>
+                    <li>@air.name</li>
+                    <ul>@air.runway.map { run=>
+                    <li>@run.id</li>
+                        }
+                    </ul>
+                </ul>
+                }
+    }
+</div>
