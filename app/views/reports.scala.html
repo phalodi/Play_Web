@@ -67,4 +67,19 @@
         </div>
 
     </div>
+
+    <div>
+        <div>
+            <h3>Type of runways for different countries</h3>
+            @report.airportRunway.map { airportRun =>
+
+            <ul><b>@airportRun.country</b>
+                @airportRun.runwayType.map { runwayType =>
+                <li>@runwayType</li>
+                }
+            </ul>
+            }
+        </div>
+
+    </div>
 </div>
